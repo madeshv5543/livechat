@@ -69,4 +69,12 @@ function deleteMessage(meetinId, message){
       }
 }
 
-module.exports ={ joinUser, removeUser,findUser, addMessgaesToRoom, getAllUsers, blockUser, unblockUser,getAllMeetingMsg, updateMessage, deleteMessage}
+function addBlockUser(userId){
+    blockUser.push(userId);
+}
+
+function getblockedUsers(){
+    return blockUser;
+}
+
+module.exports ={ joinUser, removeUser,findUser, addMessgaesToRoom, getAllUsers, blockUser, unblockUser,getAllMeetingMsg, updateMessage, deleteMessage, addBlockUser,getblockedUsers}

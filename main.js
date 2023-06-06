@@ -11,7 +11,7 @@ var http = require('http').createServer(app);
 var io = require("socket.io")(http,{cors: {
     origin: '*',
   }});
-const {joinUser, removeUser, findUser, addMessgaesToRoom, getAllUsers, getAllMeetingMsg, updateMessage, deleteMessage} = require('./user');
+const {joinUser, removeUser, findUser, addMessgaesToRoom, getAllUsers, getAllMeetingMsg, updateMessage, deleteMessage, addBlockUser, getblockedUsers} = require('./user');
 let thisRoom = "";
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/index.html");
@@ -40,6 +40,16 @@ app.post('/deleteMessage/:meeting', function (req,res){
     let messsageid = req.body.id;
     deleteMessage(meetingId,req.body);
     res.json({success:true,message:req.body});
+})
+
+app.post('/blockUser/:userId',function(req, res){
+   addBlockUser(req.params.userId);
+   return res.json({success:true,message:'User blocked successfully'});
+})
+
+app.get('/blockedUSer', function(req, res){
+  let users = getblockedUsers();
+  return res.json({success:true, data: users});
 })
 
 io.on("connection", function (socket) {
